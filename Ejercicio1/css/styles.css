@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    font-family: 'Quicksand', 'Times New Roman', Times, serif;
+}
+
+body {
+    min-height: 100vh;
+    transition:
+    background-color 0.5s ease,
+    color 0.25s ease;
+}
+
+.bg-acad {
+    background-color: rgb(146, 54, 11);
+}
+
+#img-navbrand {
+    height: 85px;
+    width: 90px;
+}
+
+#carruselInfo .carousel-item img {
+    height: 60vh;
+    object-fit: cover;
+    object-position: center;
+}
+
+#img-navbrand {
+    height: 75px;
+    width: 85px;
+}
+
+.curso-card-img {
+    height: 350px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.beneficio-card-img {
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 5px;
+}
