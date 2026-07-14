@@ -1,0 +1,10 @@
+# Carpetas y archivos del sistema operativo.
+.DS_Store
+Thumbs.db
+
+# Configuración de editores.
+.vscode/
+*.sublime-workspace
+
+# Archivos temporales o de registro.
+*.log
