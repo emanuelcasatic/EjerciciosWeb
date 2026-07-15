@@ -1,18 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Ejercicio 1</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/styles.css" rel="stylesheet">
-    <link href="./css/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 1</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link href="./css/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#nav-principal" tabindex="0">
     <header>
-        <h1 id="inicio"></h1>
+        <h1 id="inicio" class="d-none">Inicio</h1> 
         <nav class="navbar navbar-expand-lg bg-acad sticky-top">
             <div class="container-fluid">
                 <a class="navbar-brand text-white d-flex align-items-center" href="#inicio">
@@ -38,10 +38,10 @@
                             <a class="nav-link text-white" href="#cursos">Cursos</a>
                         </li>
                         <li class="nav-item m-1">
-                            <a class="nav-link text-white" href="#">Galería</a>
+                            <a class="nav-link text-white" href="#galeria">Galería</a>
                         </li>
                         <li class="nav-item m-1">
-                            <a class="nav-link text-white" href="#">Contacto</a>
+                            <a class="nav-link text-white" href="#contacto">Contacto</a>
                         </li>
                     </ul>
 
@@ -56,12 +56,11 @@
     </header>
 
     <div class="container-fluid justify-content-center text-center mt-2 mb-2" id="carga-spinner">
-        <div class="spinner-border">
-        </div>
-        <span class="visually">Cargando...</span>
+        <div class="spinner-border" role="status"></div> 
+        <span class="visually-hidden">Cargando...</span>
     </div>
 
-    <main class="container-fluid" id="contenido-principal" style="display: none;">
+    <main class="container-fluid" id="contenido-principal" style="display: none">
         <div id="carruselInfo" class="carousel slide carousel-fade shadow rounded overflow-hidden"
             data-bs-ride="carousel" data-bs-interval="2500">
             <div class="carousel-indicators">
@@ -98,7 +97,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Desarrolla proyectos reales.</h5>
                                 <p class="card-text">
-                                    Tus aplicaciones tendrán la calidad de proyectos oficiales,
+                                    Tus aplicaciones tendrán la calidad de proyectos oficiales.
                                 </p>
                                 <a class="btn btn-success" type="button" href="#contacto">
                                     Contacto
@@ -138,19 +137,23 @@
             </button>
         </div>
 
-        <h1 class="text-center mt-2 mb-2" id="info"><i class="bi bi-building-fill-gear"></i> Información Institucional
+        <h1 class="text-center mt-2 mb-2" id="info">
+            <i class="bi bi-building-fill-gear"></i> Información Institucional
         </h1>
 
         <div class="container-fluid">
-            <h3 class="text-center mt-2 mb-2" id="info"><i class="bi bi-info-circle"></i> ¿Quiénes Somos?</h3>
+            <h3 class="text-center mt-2 mb-2">
+                <i class="bi bi-info-circle"></i> ¿Quiénes Somos?
+            </h3>
             <div class="card shadow">
                 <div class="card-body text-center">
                     <p class="card-text">
-                        Somos una prestigiosa academia que implementa la tecnología en el aprendizaje de sus educandos,
-                        para que sea profesionales que encuentren soluciones reales ya la vanguardia de las nuevas
+                        Somos una prestigiosa academia que implementa la tecnología en el
+                        aprendizaje de sus educandos, para que sean profesionales que
+                        encuentren soluciones reales y a la vanguardia de las nuevas
                         tecnologías.
                     </p>
-                    <img src="./img/logo.jpg">
+                    <img src="./img/logo.jpg" alt="Logotipo Institucional" />
                 </div>
             </div>
         </div>
@@ -172,7 +175,7 @@
 
             <div class="col-12 col-sm-6 col-lg-3 mb-4">
                 <div class="card shadow h-100">
-                    <img src="./img/certificación.jpeg" class="card-img-top beneficio-card-img" alt="Otro Beneficio" />
+                    <img src="./img/certificación.jpeg" class="card-img-top beneficio-card-img" alt="Certificación" />
                     <div class="card-body text-center">
                         <h5 class="card-title">Certificación</h5>
                         <p class="card-text">
@@ -185,7 +188,7 @@
 
             <div class="col-12 col-sm-6 col-lg-3 mb-4">
                 <div class="card shadow h-100">
-                    <img src="./img/instructores.webp" class="card-img-top beneficio-card-img" alt="Otro Beneficio" />
+                    <img src="./img/instructores.webp" class="card-img-top beneficio-card-img" alt="Instructores" />
                     <div class="card-body text-center">
                         <h5 class="card-title">Instructores Especializados</h5>
                         <p class="card-text">
@@ -198,7 +201,7 @@
 
             <div class="col-12 col-sm-6 col-lg-3 mb-4">
                 <div class="card shadow h-100">
-                    <img src="./img/proyectos.jpg" class="card-img-top beneficio-card-img" alt="Otro Beneficio" />
+                    <img src="./img/proyectos.jpg" class="card-img-top beneficio-card-img" alt="Proyectos" />
                     <div class="card-body text-center">
                         <h5 class="card-title">Proyectos Reales</h5>
                         <p class="card-text">
@@ -247,10 +250,11 @@
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $20.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card shadow h-100">
                     <img src="./img/javascript.png" class="card-img-top curso-card-img" alt="Curso JS." />
@@ -264,10 +268,11 @@
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $25.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="card shadow h-100">
                     <img src="./img/bootstrap.png" class="card-img-top curso-card-img" alt="Curso de Bootstrap." />
@@ -277,11 +282,11 @@
                             <span class="badge text-bg-warning">Pocos cupos disponibles</span>
                         </h5>
                         <p class="card-text">
-                            Aprende a diseñas páginas web de una manera sencilla y rápida.
+                            Aprende a diseñar páginas web de una manera sencilla y rápida.
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $15.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
@@ -300,7 +305,7 @@
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $40.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
@@ -319,7 +324,7 @@
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $25.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
@@ -338,7 +343,7 @@
                         </p>
                         <p class="card-text">Duración: 4 semanas</p>
                         <p class="card-text">Precio: $35.00</p>
-                        <a class="btn btn-secondary">Ver curso</a>
+                        <a href="#" class="btn btn-secondary">Ver curso</a>
                     </div>
                 </div>
             </div>
@@ -411,94 +416,212 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div>
-                <h3 class="text-center mt-2 mb-4">Galería</h3>
+        <div class="container-fluid m-1" id="galeria">
+            <h3 class="text-center mt-4 mb-4">Galería</h3>
+            <div class="row g-2">
+                <div class="col-12 col-md-4">
+                    <img src="./img/galeria1.jpg" class="img-fluid rounded shadow galeria-card-img" alt="Foto 1" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <img src="./img/galeria2.avif" class="img-fluid rounded shadow galeria-card-img" alt="Foto 2" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <img src="./img/galeria3.avif" class="img-fluid rounded shadow galeria-card-img" alt="Foto 3" />
+                </div>
+            </div>
+        </div>
+
+            <div class="container-fluid m-1">
+                <h3 class="text-center mt-2 mb-4 scroll-section" id="horarios">Horarios</h3>
+                    <div class="table-responsive">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr class="table-dark">
+                                    <th>Curso</th>
+                                    <th>Instructor</th>
+                                    <th>Días</th>
+                                    <th>Horario</th>
+                                    <th>Modalidad</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <tr>
+                                    <td>HTML y CSS</td>
+                                    <td>Fulano 1</td>
+                                    <td>Lunes a Viernes</td>
+                                    <td>8:00AM a 12:00PM</td>
+                                    <td>Presencial</td>
+                                    <td><span class="badge text-bg-success">Disponible</span></td>
+                                </tr>
+                                <tr>
+                                    <td>JavaScript</td>
+                                    <td>Fulano 2</td>
+                                    <td>Lunes a Viernes</td>
+                                    <td>8:00AM a 12:00PM</td>
+                                    <td>Presencial</td>
+                                    <td><span class="badge text-bg-success">Disponible</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Bootstrap</td>
+                                    <td>Fulano 3</td>
+                                    <td>Lunes a Viernes</td>
+                                    <td>1:00PM a 5:00PM</td>
+                                    <td>Presencial</td>
+                                    <td>
+                                        <span class="badge text-bg-warning">Pocos cupos disponibles</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>C#</td>
+                                    <td>Fulano 4</td>
+                                    <td>Lunes a Viernes</td>
+                                    <td>1:00PM a 5:00PM</td>
+                                    <td>Presencial</td>
+                                    <td><span class="badge text-bg-success">Disponible</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Bases de Datos</td>
+                                    <td>Fulano 5</td>
+                                    <td>Lunes a Viernes</td>
+                                    <td>1:00PM a 5:00PM</td>
+                                    <td>Presencial</td>
+                                    <td>
+                                        <span class="badge text-bg-warning">Pocos cupos disponibles</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Git y Github</td>
+                                    <td>Fulano 6</td>
+                                    <td>Jueves y Viernes</td>
+                                    <td>8:00AM a 12:00PM</td>
+                                    <td>Presencial</td>
+                                    <td><span class="badge text-bg-danger">Lleno</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
 
-            <div class="container-fluid my-4 scroll-section" id="inscripcion">
+            <div class="container-fluid my-4 scroll-section" id="video">
+                <h3 class="text-center mt-2 mb-4">Vídeo Institucional</h3>
+                <div class="col-12 col-md-8 ratio ratio-16x9">
+                    <iframe id="iframe-video" src="https://www.youtube.com/embed/LlCwHnp3kL4" title="Video Institucional Academia" allowfullscreen></iframe>
+                </div>
+                </iframe>
+            </div>
+
+            <div class="container-fluid my-4 scroll-section" id="contacto">
                 <h3 class="text-center mt-2 mb-4">Contáctanos</h3>
 
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-6">
-                        <form id="frmInscripcion">
+                        <form id="frmContacto">
                             <div class="card shadow">
                                 <div class="card-body p-4">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Nombre Completo</label>
-                                        <input type="text" class="form-control" placeholder="Ej. Juan Pérez" required />
+                                        <input id="nombre" type="text" class="form-control" placeholder="Ej. Juan Pérez"
+                                            required />
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Correo Electrónico</label>
-                                        <input type="email" class="form-control" placeholder="nombre@correo.com"
-                                            required />
+                                        <input id="correo" type="email" class="form-control"
+                                            placeholder="nombre@correo.com" required />
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Teléfono</label>
                                         <div class="input-group">
                                             <span class="input-group-text">+503</span>
-                                            <input type="tel" class="form-control" placeholder="1234-5678"
+                                            <input id="telefono" type="tel" class="form-control" placeholder="1234-5678"
                                                 pattern="[0-9]{4}-[0-9]{4}" required />
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Curso</label>
-                                        <select class="form-select" id="curso-select"
-                                            aria-label="Selecciona el curso..." required>
-                                            <option value="" selected>
-                                                Selecciona el curso...
-                                            </option>
-                                            <option value="htmlycss">HTML y CSS</option>
-                                            <option value="js">JavaScript</option>
-                                            <option value="bootstrap">Bootstrap</option>
-                                            <option value="c#">C#</option>
-                                            <option value="bd">Bases de Datos</option>
-                                            <option value="gitygithub">Git y GitHub</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Modalidad</label>
-                                        <select class="form-select" id="modalidad-select"
-                                            aria-label="Seleccion la modalidad..." required>
-                                            <option value="" selected>
-                                                Selecciona la modalidad...
-                                            </option>
-                                            <option value="presencial">Presencial</option>
-                                            <option value="2">Virtual</option>
-                                            <option value="3">Híbrida</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Comentarios</label>
-                                        <textarea class="form-control"
+                                        <label class="form-label fw-bold">Mensaje</label>
+                                        <textarea id="mensaje" class="form-control"
                                             placeholder="La plataforma me parece excelente..." required></textarea>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Acepto Términos y Condiciones</label>
-                                        <input type="checkbox" class="form-check" required />
+                                        <input id="confirmarTerminos" type="checkbox" class="form-check-input" />
                                     </div>
 
                                     <button type="submit" class="btn btn-success w-100 mt-2">
-                                        Registrarse
+                                        Enviar Mensaje
                                     </button>
                                 </div>
                             </div>
                         </form>
-                    </div>
-
-                    <div class="alert alert-primary">
-                        Completa el formulario para solicitar información.
-
+                        <div class="alert alert-primary">
+                            Completa el formulario para poder contactarte.
+                        </div>
+                        <div class="container text-center">
+                            <a class="btn btn-primary" href="#inicio"> Regresar al Inicio </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="enviadoToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-success">
+                        <i class="bi bi-check"></i>
+                        <strong class="me-auto">Mensaje enviado correctamente.</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Tu mensaje ya fue enviado, te responderemos en la brevedad posible.
+                    </div>
+                </div>
+            </div>
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header bg-danger">
+                        <i class="bi bi-x"></i>
+                        <strong class="me-auto">Datos incompletos.</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Todos los datos del formulario deben de ser completados correctamente.
+                    </div>
+                </div>
+            </div>
+
+            <footer class="container-fluid bg-acad py-4 m-1">
+                <div class="row mt-1 text-center text-white">
+                    <h5 class="mb-4">
+                        Academia Tecnológica busca la excelencia en sus alumnos y maestros.
+                    </h5>
+                    <h5 class="mb-4">Redes Sociales</h5>
+                    <div class="col-md-3">
+                        <i class="bi bi-youtube"></i>
+                        <a href="#" class="nav-link">Canal de YouTube</a>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-facebook"></i>
+                        <a href="#" class="nav-link">Página de Facebook</a>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-phone"></i>
+                        <a href="tel:7777-7777" class="nav-link">Teléfono</a>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-envelope-at"></i>
+                        <a href="mailto:example@example.com" class="nav-link">Correo</a>
+                    </div>
+                </div>
+                <h4 class="text-center text-white mt-4">
+                    © 2026 Academia Tecnológica. Todos los derechos reservados.
+                </h4>
+            </footer>
     </main>
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/app.js"></script>

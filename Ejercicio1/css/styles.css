@@ -15,20 +15,16 @@ body {
     background-color: rgb(146, 54, 11);
 }
 
+
 #img-navbrand {
-    height: 85px;
-    width: 90px;
+    height: 75px;
+    width: 85px;
 }
 
 #carruselInfo .carousel-item img {
     height: 60vh;
     object-fit: cover;
     object-position: center;
-}
-
-#img-navbrand {
-    height: 75px;
-    width: 85px;
 }
 
 .curso-card-img {
@@ -40,6 +36,13 @@ body {
 
 .beneficio-card-img {
     height: 300px;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.galeria-card-img {
+    height: 280px;
     object-fit: cover;
     width: 100%;
     border-radius: 5px;
