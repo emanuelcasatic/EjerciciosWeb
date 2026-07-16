@@ -35,6 +35,8 @@ const btnOrdenar = document.getElementById("btnAplicarFiltros");
 const selectOrdenar = document.getElementById("selectOrdenar");
 const btnCards = document.getElementById("btnVistaCartas");
 const btnTabla = document.getElementById("btnVistaTabla");
+const modalAgregarEvento = document.getElementById("modalAgregarEvento");
+const modalEditarEvento = document.getElementById("modalEditarEvento");
 let filtro = "";
 let categoriaBuscar = "Todas";
 let fechaBuscar = "";
@@ -95,6 +97,8 @@ frmEvento.addEventListener("submit", function (e) {
             cupos,
             descripcion,
         );
+        const modal = bootstrap.Modal.getInstance(modalAgregarEvento);
+        modal.hide();
         cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(exitoToast);
         toastBootstrap.show();
@@ -167,6 +171,8 @@ frmEditar.addEventListener("submit", function (e) {
                     cupos,
                     descripcion,
                 );
+                const modal = bootstrap.Modal.getInstance(modalEditarEvento);
+                modal.hide();
                 cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
                 const toastBootstrap = bootstrap.Toast.getOrCreateInstance(exitoToast);
                 toastBootstrap.show();
@@ -370,7 +376,7 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
                                 <button onclick="editarEvento('${e.codigo}')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalEditarEvento" title="Editar">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <button onclick="eliminarEvento('${e.codigo}')" data-bs-toggle="modal" data-bs-target="#modalEliminarEvento" class="btn btn-sm btn-outline-danger" title="Eliminar">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -411,10 +417,10 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
                                             data-bs-target="#offcanvasDetalle" title="Ver Detalles">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button onclick="editarEvento('${e.codigo}')"  data-bs-toggle="modal" data-bs-target="#modalEditarEvento" class="btn btn-sm btn-outline-warning" title="Editar">
+                                        <button onclick="editarEvento('${e.codigo}')" data-bs-toggle="modal" data-bs-target="#modalEditarEvento" class="btn btn-sm btn-outline-warning" title="Editar">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <button onclick="eliminarEvento('${e.codigo}')" data-bs-toggle="modal" data-bs-target="#modalEliminarEvento" class="btn btn-sm btn-outline-danger" title="Eliminar">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
@@ -457,6 +463,10 @@ function editarEvento(codigoActual) {
     categoria.value = eventoActual.categoria;
     cupos.value = eventoActual.cupos;
     descripcion.value = eventoActual.descripcion;
+}
+
+function eliminarEvento(codigoActual) {
+
 }
 
 cargarDatos();

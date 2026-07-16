@@ -108,7 +108,7 @@
                 </div>
 
                 <div id="contenedorEventos">
-                
+
                 </div>
 
                 <nav class="mt-4" aria-label="Paginación de eventos">
@@ -214,13 +214,13 @@
 
                 <form id="frmEditarEvento">
                     <input type="hidden" class="form-control" id="codigoActualEditar" pattern="[A-Z]{3}-[0-9]{3}"
-                                    placeholder="Ej. ABC-001" required/>
+                        placeholder="Ej. ABC-001" required />
                     <div class="modal-body bg-light">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Código</label>
                                 <input type="text" class="form-control" id="codigoEditar" pattern="[A-Z]{3}-[0-9]{3}"
-                                    placeholder="Ej. ABC-001" required/>
+                                    placeholder="Ej. ABC-001" required />
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Categoría</label>
@@ -271,6 +271,20 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEliminarEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header text-danger">
+                    <h5 class="modal-title fw-bold" id="modalEventoLabel">
+                        <i class="bi bi-calendar-plus"></i> ¿Quieres eliminar el evento?
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
             </div>
         </div>
     </div>
