@@ -1,21 +1,363 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introducción a Bootstrap</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <link href="./css/styles.css" rel="stylesheet">
-    <link href="./css/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 2</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link href="./css/font/bootstrap-icons.css" rel="stylesheet" />
 </head>
 
-<body>
-    <main>
-        <div class="container">
-            
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-header navbar-dark sticky-top shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+                    <i class="bi bi-cpu fs-4 me-2"></i> EventsTech
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <div class="d-flex ms-auto gap-2 mt-2 mt-lg-0">
+                        <input id="inputBuscar" class="form-control border-0" type="search"
+                            placeholder="Buscar evento..." aria-label="Buscar" />
+                        <button id="btnBuscar" class="btn btn-light text-primary" type="button" title="Buscar">
+                            <i class="bi bi-search"></i>
+                        </button>
+
+                        <button class="btn btn-success fw-bold text-white shadow-sm" data-bs-toggle="modal"
+                            data-bs-target="#modalAgregarEvento">
+                            <i class="bi bi-plus-lg"></i> Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <aside class="col-12 col-md-3 col-lg-2 mb-4">
+                <h5 class="text-custom-title mb-3">
+                    <i class="bi bi-funnel"></i> Categorías
+                </h5>
+                <div class="list-group shadow-sm" id="listaCategorias">
+                    <button type="button" class="list-group-item list-group-item-action active">
+                        Todas
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">
+                        Desarrollo
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">
+                        Ciberseguridad
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">
+                        Redes
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action">
+                        IA & Data
+                    </button>
+                </div>
+            </aside>
+
+            <main class="col-12 col-md-9 col-lg-10">
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-white rounded shadow-sm">
+                    <h3 class="text-custom-title mb-0">Listado de Eventos</h3>
+                    <div class="btn-group shadow-sm">
+                        <button class="btn btn-outline-primary active" id="btnVistaCartas" title="Vista Tarjetas">
+                            <i class="bi bi-grid-fill"></i>
+                        </button>
+                        <button class="btn btn-outline-primary" id="btnVistaTabla" title="Vista Tabla">
+                            <i class="bi bi-table"></i>
+                        </button>
+                        <button class="btn btn-primary ms-2 rounded" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#filtrosAvanzados">
+                            <i class="bi bi-sliders"></i> Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <div class="collapse mb-4" id="filtrosAvanzados">
+                    <div class="card card-body shadow-sm border-0 bg-white">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-secondary">Ordenar por:</label>
+                                <select class="form-select" id="selectOrdenar">
+                                    <option value="fechaAsc">Fecha (Más próximos)</option>
+                                    <option value="fechaDesc">Fecha (Más lejanos)</option>
+                                    <option value="nombreAsc">Nombre (A-Z)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-secondary">Desde fecha:</label>
+                                <input type="date" class="form-control" id="filtroFecha" />
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-outline-primary w-100 fw-bold" id="btnAplicarFiltros">
+                                    Aplicar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contenedorEventos">
+                
+                </div>
+
+                <nav class="mt-4" aria-label="Paginación de eventos">
+                    <ul class="pagination justify-content-center shadow-sm">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Anterior</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
+            </main>
         </div>
-    </main>
+    </div>
+
+    <div class="modal fade" id="modalAgregarEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header text-white">
+                    <h5 class="modal-title fw-bold" id="modalEventoLabel">
+                        <i class="bi bi-calendar-plus"></i> Agregar Evento
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form id="frmEvento">
+                    <div class="modal-body bg-light">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código</label>
+                                <input type="text" class="form-control" id="codigo" pattern="[A-Z]{3}-[0-9]{3}"
+                                    placeholder="Ej. ABC-001" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoría</label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Desarrollo">Desarrollo</option>
+                                    <option value="Ciberseguridad">Ciberseguridad</option>
+                                    <option value="Redes">Redes</option>
+                                    <option value="IA & Data">IA & Data</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Nombre del Evento</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Ej. Taller de C#"
+                                    required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Lugar</label>
+                                <input type="text" class="form-control" id="lugar" placeholder="Ej. Laboratorio 1"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Hora</label>
+                                <input type="time" class="form-control" id="hora" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Cupos</label>
+                                <input type="number" class="form-control" id="cupos" min="1" placeholder="Ej. 30"
+                                    required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Descripción</label>
+                                <textarea class="form-control" id="descripcion" rows="3"
+                                    placeholder="Breve descripción del evento..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-white border-top">
+                        <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success fw-bold text-white">
+                            Guardar Evento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header text-white">
+                    <h5 class="modal-title fw-bold" id="modalEventoLabel">
+                        <i class="bi bi-calendar-plus"></i> Editar Evento
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form id="frmEditarEvento">
+                    <input type="hidden" class="form-control" id="codigoActualEditar" pattern="[A-Z]{3}-[0-9]{3}"
+                                    placeholder="Ej. ABC-001" required/>
+                    <div class="modal-body bg-light">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código</label>
+                                <input type="text" class="form-control" id="codigoEditar" pattern="[A-Z]{3}-[0-9]{3}"
+                                    placeholder="Ej. ABC-001" required/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoría</label>
+                                <select class="form-select" id="categoriaEditar" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Desarrollo">Desarrollo</option>
+                                    <option value="Ciberseguridad">Ciberseguridad</option>
+                                    <option value="Redes">Redes</option>
+                                    <option value="IA & Data">IA & Data</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Nombre del Evento</label>
+                                <input type="text" class="form-control" id="nombreEditar" placeholder="Ej. Taller de C#"
+                                    required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Lugar</label>
+                                <input type="text" class="form-control" id="lugarEditar" placeholder="Ej. Laboratorio 1"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Fecha</label>
+                                <input type="date" class="form-control" id="fechaEditar" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Hora</label>
+                                <input type="time" class="form-control" id="horaEditar" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Cupos</label>
+                                <input type="number" class="form-control" id="cuposEditar" min="1" placeholder="Ej. 30"
+                                    required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Descripción</label>
+                                <textarea class="form-control" id="descripcionEditar" rows="3"
+                                    placeholder="Breve descripción del evento..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-white border-top">
+                        <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success fw-bold text-white">
+                            Editar Evento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end shadow" tabindex="-1" id="offcanvasDetalle"
+        aria-labelledby="offcanvasDetalleLabel">
+        <div class="offcanvas-header bg-light border-bottom">
+            <h5 class="offcanvas-title text-custom-title fw-bold" id="offcanvasDetalleLabel">
+                <i class="bi bi-info-circle"></i> Detalles del Evento
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h4 class="text-primary fw-bold" id="detNombre">
+                Taller Clean Architecture
+            </h4>
+            <span class="badge bg-secondary mb-4 fs-6" id="detCodigo">EVT-001</span>
+
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-tag text-primary"></i> Categoría:</strong>
+                    <span id="detCategoria">Desarrollo</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-geo-alt text-primary"></i> Lugar:</strong>
+                    <span id="detLugar">Auditorio A</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-calendar text-primary"></i> Fecha:</strong>
+                    <span id="detFecha">15/08/2026</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-clock text-primary"></i> Hora:</strong>
+                    <span id="detHora">14:00</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-people text-primary"></i> Cupos:</strong>
+                    <span id="detCupos">50</span>
+                </li>
+            </ul>
+
+            <h6 class="fw-bold text-secondary border-bottom pb-2">Descripción</h6>
+            <p id="detDescripcion" class="text-dark mt-2">
+                Aprende las bases de la arquitectura limpia, inyección de dependencias
+                y principios SOLID aplicando C# y .NET.
+            </p>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastExito" class="toast align-items-center text-bg-success border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span id="toastExitoMsj">Evento guardado correctamente.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastError" class="toast align-items-center text-bg-danger border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="toastErrorMsj">Revisa los campos.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastCodigo" class="toast align-items-center text-bg-warning border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="toastErrorMsj">Código repetido, usa otro.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/app.js"></script>
 </body>
