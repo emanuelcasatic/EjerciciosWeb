@@ -381,7 +381,7 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
     const paginacion = document.getElementById("paginacion");
     paginacion.innerHTML = "";
 
-    let listaPartida = listaDeEventosFiltrada.splice(i, j);
+    let listaPartida = listaDeEventosFiltrada.slice(i, j);
     console.log(listaPartida);
 
 
