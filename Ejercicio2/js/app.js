@@ -20,12 +20,12 @@ class Evento {
     }
 }
 const listaDeEventos = JSON.parse(localStorage.getItem("listaDeEventos")) || [];
-let mensajeDeError = "";
 let renderizado = "cards";
 const frmEvento = document.getElementById("frmEvento");
 const frmEditar = document.getElementById("frmEditarEvento");
 const exitoToast = document.getElementById("toastExito");
 const errorToast = document.getElementById("toastError");
+const exitoEliminarToast = document.getElementById("toastExitoEliminar");
 const codigoToast = document.getElementById("toastCodigo");
 const contenedorEventos = document.getElementById("contenedorEventos");
 const filtroInput = document.getElementById("inputBuscar");
@@ -37,9 +37,13 @@ const btnCards = document.getElementById("btnVistaCartas");
 const btnTabla = document.getElementById("btnVistaTabla");
 const modalAgregarEvento = document.getElementById("modalAgregarEvento");
 const modalEditarEvento = document.getElementById("modalEditarEvento");
+const modalEliminarEvento = document.getElementById("modalEliminarEvento");
+const btnEliminar = document.getElementById("btnEliminarEvento");
+const codEventoEliminar = document.getElementById("codEventoEliminar");
 let filtro = "";
 let categoriaBuscar = "Todas";
 let fechaBuscar = "";
+let paginaActual = 1;
 
 frmEvento.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -200,6 +204,20 @@ btnOrdenar.addEventListener("click", function (e) {
     cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
 });
 
+btnEliminar.addEventListener("click", function (e) {
+    e.preventDefault();
+    console.log(codEventoEliminar.textContent)
+    let listaNueva = listaDeEventos.filter(e => e.codigo != codEventoEliminar.textContent);
+    listaDeEventos.length = 0;
+    listaNueva.forEach(e => listaDeEventos.push(e));
+    localStorage.setItem("listaDeEventos", JSON.stringify(listaDeEventos));
+    const toast = bootstrap.Toast.getOrCreateInstance(exitoEliminarToast);
+    toast.show();
+    const modal = bootstrap.Modal.getInstance(modalEliminarEvento);
+    modal.hide();
+    cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
+});
+
 btnCards.addEventListener("click", function (e) {
     e.preventDefault();
 
@@ -348,14 +366,47 @@ function filtrarEventos(lista, categoria, filtro, fecha, ordenarPor) {
 
 function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = "") {
     contenedorEventos.innerHTML = "";
+    if (listaDeEventos.length <= 0) {
+        contenedorEventos.innerHTML = `
+            <div class="container-fluid text-center mt-5"> 
+                <h2 class="text-muted"> No hay eventos aún. </h2>
+            </div>`;
+        return;
+    }
     let listaDeEventosFiltrada = filtrarEventos(listaDeEventos, categoria, filtro, fecha, ordenarPor);
+    const eventosPorPagina = 6;
+    const cantidadDePaginas = Math.ceil(listaDeEventosFiltrada.length / eventosPorPagina);
+    const i = (paginaActual - 1) * eventosPorPagina;
+    const j = Math.min(i + eventosPorPagina, listaDeEventosFiltrada.length);
+    const paginacion = document.getElementById("paginacion");
+    paginacion.innerHTML = "";
 
-    if (listaDeEventosFiltrada.length > 0) {
+    let listaPartida = listaDeEventosFiltrada.splice(i, j);
+    console.log(listaPartida);
+
+
+    if (listaPartida.length > 0) {
+        let htmlPaginacion = `<li class="page-item ${(paginaActual - 1 <= 0) ? 'disabled' : ''}">
+                            <button ${(paginaActual - 1 <= 0) ? '' : `onclick="cambiarPagina('${paginaActual - 1}')"`}" class="page-link">Anterior</button>
+                        </li>`;
+        for (let cont = 0; cont < cantidadDePaginas; cont++) {
+            htmlPaginacion += `
+                        <li class="page-item ${(paginaActual - 1 == cont) ? 'active' : ''}">
+                            <button onclick="cambiarPagina('${cont + 1}')" class="page-link">${cont + 1}</button>
+                        </li>   
+            `;
+        }
+
+        htmlPaginacion += `<li class="page-item ${(paginaActual + 1 > cantidadDePaginas) ? 'disabled' : ''}">
+                              <button ${(paginaActual + 1 > cantidadDePaginas) ? '' : `onclick="cambiarPagina('${paginaActual + 1}')"`}" class="page-link">Siguiente</button>
+                        </li>`
+
+        paginacion.innerHTML = htmlPaginacion;
 
         if (renderizado !== "table") {
             let htmlCartas = `<div class="row g-4" id="vistaCartas">`;
 
-            listaDeEventosFiltrada.forEach((e) => {
+            listaPartida.forEach((e) => {
                 htmlCartas += `
                 <div class="col-12 col-md-6 col-xl-4">
                     <div class="card h-100 shadow-sm border-0 custom-card-hover">
@@ -371,7 +422,7 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
                             <p class="card-text"><i class="bi bi-people text-primary"></i> Cupos: ${e.cupos}</p>
                         </div>
                         <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetalle">Detalles</button>
+                            <button onclick="cargarDetalles('${e.codigo}')" class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDetalle">Detalles</button>
                             <div class="btn-group">
                                 <button onclick="editarEvento('${e.codigo}')" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modalEditarEvento" title="Editar">
                                     <i class="bi bi-pencil"></i>
@@ -402,7 +453,7 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
                             </thead>
                             <tbody>`;
 
-            listaDeEventosFiltrada.forEach(e => {
+            listaPartida.forEach(e => {
                 htmlTabla += `
                                 <tr>
                                     <td><span class="badge bg-secondary">${e.codigo}</span></td>
@@ -413,7 +464,7 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
                                     <td><span class="badge bg-primary">${e.categoria}</span></td>
                                     <td>${e.cupos}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas"
+                                        <button onclick="cargarDetalles('${e.codigo}')" class="btn btn-sm btn-outline-primary" data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasDetalle" title="Ver Detalles">
                                             <i class="bi bi-eye"></i>
                                         </button>
@@ -439,6 +490,8 @@ function cargarDatos(categoria = "Todas", filtro = "", fecha = "", ordenarPor = 
             <div class="container-fluid text-center mt-5"> 
                 <h2 class="text-muted"> No hay eventos aún. </h2>
             </div>`;
+
+        paginacion.innerHTML += `<p>Para paginación agrega eventos o filtra los que están.</p>`;
     }
 }
 
@@ -466,10 +519,57 @@ function editarEvento(codigoActual) {
 }
 
 function eliminarEvento(codigoActual) {
+    codEventoEliminar.innerText = codigoActual;
+}
 
+function cargarDetalles(codigoActual) {
+    const nombre = document.getElementById("detNombre");
+    const codigo = document.getElementById("detCodigo");
+    const categoria = document.getElementById("detCategoria");
+    const lugar = document.getElementById("detLugar");
+    const fecha = document.getElementById("detFecha");
+    const hora = document.getElementById("detHora");
+    const cupos = document.getElementById("detCupos");
+    const descripcion = document.getElementById("detDescripcion");
+
+    const eventoDetalles = listaDeEventos.find(e => e.codigo == codigoActual);
+
+    if (eventoDetalles) {
+        nombre.innerText = eventoDetalles.nombre;
+        codigo.innerText = eventoDetalles.codigo;
+        categoria.innerText = eventoDetalles.categoria;
+        lugar.innerText = eventoDetalles.lugar;
+        fecha.innerText = eventoDetalles.fecha;
+        hora.innerText = eventoDetalles.hora;
+        cupos.innerText = eventoDetalles.cupos;
+        descripcion.innerText = eventoDetalles.descripcion;
+    } else {
+        nombre.innerText = "Error al cargar o inexistente.";
+        codigo.innerText = "Error al cargar o inexistente.";
+        categoria.innerText = "Error al cargar o inexistente.";
+        lugar.innerText = "Error al cargar o inexistente.";
+        fecha.innerText = "Error al cargar o inexistente.";
+        hora.innerText = "Error al cargar o inexistente.";
+        cupos.innerText = "Error al cargar o inexistente.";
+        descripcion.innerText = "Error al cargar o inexistente.";
+    }
+}
+
+function asignarCategoria(c, categoriaClickeada) {
+    categoriaBuscar = c;
+    const categorias = document.querySelectorAll('#listaCategorias button');
+
+    categorias.forEach(boton => {
+        boton.classList.remove('active');
+    });
+
+    categoriaClickeada.classList.add('active');
+    cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
+}
+
+function cambiarPagina(p) {
+    paginaActual = Number(p);
+    cargarDatos(categoriaBuscar, filtro, fechaBuscar, selectOrdenar.value);
 }
 
 cargarDatos();
-/*
-   
- */

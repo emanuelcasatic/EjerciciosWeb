@@ -48,19 +48,19 @@
                     <i class="bi bi-funnel"></i> Categorías
                 </h5>
                 <div class="list-group shadow-sm" id="listaCategorias">
-                    <button type="button" class="list-group-item list-group-item-action active">
+                    <button onclick="asignarCategoria('Todas', this)" type="button" class="list-group-item list-group-item-action active">
                         Todas
                     </button>
-                    <button type="button" class="list-group-item list-group-item-action">
+                    <button onclick="asignarCategoria('Desarrollo', this)" type="button" class="list-group-item list-group-item-action">
                         Desarrollo
                     </button>
-                    <button type="button" class="list-group-item list-group-item-action">
+                    <button onclick="asignarCategoria('Ciberseguridad', this)" type="button" class="list-group-item list-group-item-action">
                         Ciberseguridad
                     </button>
-                    <button type="button" class="list-group-item list-group-item-action">
+                    <button onclick="asignarCategoria('Redes', this)" type="button" class="list-group-item list-group-item-action">
                         Redes
                     </button>
-                    <button type="button" class="list-group-item list-group-item-action">
+                    <button onclick="asignarCategoria('IA & Data', this)" type="button" class="list-group-item list-group-item-action">
                         IA & Data
                     </button>
                 </div>
@@ -112,17 +112,8 @@
                 </div>
 
                 <nav class="mt-4" aria-label="Paginación de eventos">
-                    <ul class="pagination justify-content-center shadow-sm">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">Anterior</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Siguiente</a>
-                        </li>
+                    <ul id="paginacion" class="pagination justify-content-center shadow-sm">
+                        <p>Para paginación agrega eventos o filtra los que están.</p>
                     </ul>
                 </nav>
             </main>
@@ -275,15 +266,27 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalEliminarEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+    <div class="modal fade" id="modalEliminarEvento" tabindex="-1" aria-labelledby="modalEventoLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-header text-danger">
                     <h5 class="modal-title fw-bold" id="modalEventoLabel">
-                        <i class="bi bi-calendar-plus"></i> ¿Quieres eliminar el evento?
+                        <i class="bi bi-trash-can"></i> ¿Quieres eliminar el evento?
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <h3 id="codEventoEliminar" class="text-center fw-bold"></h3>
+                </div>
+                <div class="modal-footer bg-white border-top">
+                    <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button id="btnEliminarEvento" type="button" class="btn btn-danger fw-bold text-white">
+                        Eliminar Evento
+                    </button>
                 </div>
             </div>
         </div>
@@ -301,7 +304,7 @@
             <h4 class="text-primary fw-bold" id="detNombre">
                 Taller Clean Architecture
             </h4>
-            <span class="badge bg-secondary mb-4 fs-6" id="detCodigo">EVT-001</span>
+            <span class="badge bg-secondary mb-4 fs-6" id="detCodigo">COD-001</span>
 
             <ul class="list-group list-group-flush mb-4">
                 <li class="list-group-item px-0">
@@ -365,6 +368,18 @@
                 <div class="toast-body fw-bold">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     <span id="toastErrorMsj">Código repetido, usa otro.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastExitoEliminar" class="toast align-items-center text-bg-success border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span id="toastExitoMsj">Evento eliminado correctamente.</span>
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
                     aria-label="Close"></button>
