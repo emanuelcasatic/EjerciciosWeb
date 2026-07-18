@@ -27,7 +27,7 @@
                     <div class="d-flex ms-auto gap-2 mt-2 mt-lg-0">
                         <input id="inputBuscar" class="form-control border-0" type="search"
                             placeholder="Buscar evento..." aria-label="Buscar" />
-                        <button id="btnBuscar" class="btn btn-light text-primary" type="button" title="Buscar">
+                        <button id="btnBuscar" class="btn btn-secondary text-light" type="button" title="Buscar">
                             <i class="bi bi-search"></i>
                         </button>
 
@@ -205,7 +205,7 @@
 
                 <form id="frmEditarEvento">
                     <input type="hidden" class="form-control" id="codigoActualEditar" pattern="[A-Z]{3}-[0-9]{3}"
-                        placeholder="Ej. ABC-001" required />
+                        placeholder="Ej. ABC-001" readonly required/>
                     <div class="modal-body bg-light">
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -272,7 +272,7 @@
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-header text-danger">
                     <h5 class="modal-title fw-bold" id="modalEventoLabel">
-                        <i class="bi bi-trash-can"></i> ¿Quieres eliminar el evento?
+                        <i class="bi bi-trash-fill"></i> ¿Quieres eliminar el evento?
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>

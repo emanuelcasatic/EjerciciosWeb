@@ -4,18 +4,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introducción a Bootstrap</title>
+    <title>Ejercicio 3</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/styles.css" rel="stylesheet">
     <link href="./css/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
-    <main>
-        <div class="container">
-            
+    <header>
+        <h1 id="inicio" class="d-none">Inicio</h1>
+        <nav class="navbar navbar-expand-lg bg-primary sticky-top shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white d-flex align-items-center" href="#inicio">
+                    <i class="bi bi-code"></i>
+                    <span class="ms-2">Tienda Tecnológica</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion"
+                    aria-controls="menuNavegacion" aria-expanded="false" aria-label="Menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuNavegacion">
+                    <ul id="seccionesNav" class="navbar-nav mx-auto text-center">
+                        <li class="nav-item m-1">
+                            <button class="nav-link fw-bold text-white active" onclick="cambiarVista(this, 'productos')">Productos</button>
+                        </li>
+                        <li class="nav-item m-1">
+                            <button class="nav-link text-white-50" onclick="cambiarVista(this, 'clientes')">Clientes</button>
+                        </li>
+                        <li class="nav-item m-1">
+                            <button class="nav-link text-white-50" onclick="cambiarVista(this, 'pedidos')">Pedidos</button>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex gap-2 mt-2 mt-lg-0 justify-content-center">
+                        <button id="btnTema" type="button" class="btn btn-dark" title="Cambiar Tema">
+                            <i class="bi bi-brightness-high"></i>
+                        </button>
+                        <input id="inputBuscar" class="form-control border-0" type="search"
+                            placeholder="Buscar producto..." aria-label="Buscar" />
+                        <button id="btnBuscar" class="btn btn-morado" type="button" title="Buscar">
+                            <i class="bi bi-search"></i>
+                        </button>
+
+                        <button class="btn btn-success fw-bold text-white shadow-sm" data-bs-toggle="modal"
+                            data-bs-target="#modalAgregarProducto">
+                            <i class="bi bi-plus-lg"></i> Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <aside class="col-12 col-md-3 col-lg-2 mb-4">
+                <h5 class="text-custom-title mb-3">
+                    <i class="bi bi-funnel"></i> Categorías
+                </h5>
+                <div class="list-group shadow-sm" id="listaCategorias">
+                    <button onclick="asignarCategoria('Todas', this)" type="button"
+                        class="list-group-item list-group-item-action active">
+                        Todas
+                    </button>
+                    <button onclick="asignarCategoria('Computadoras', this)" type="button"
+                        class="list-group-item list-group-item-action">
+                        Computadoras
+                    </button>
+                    <button onclick="asignarCategoria('Periféricos', this)" type="button"
+                        class="list-group-item list-group-item-action">
+                        Periféricos
+                    </button>
+                    <button onclick="asignarCategoria('Componentes', this)" type="button"
+                        class="list-group-item list-group-item-action">
+                        Componentes
+                    </button>
+                    <button onclick="asignarCategoria('Accesorios', this)" type="button"
+                        class="list-group-item list-group-item-action">
+                        Accesorios
+                    </button>
+                </div>
+            </aside>
+
+            <main class="col-12 col-md-9 col-lg-10">
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm custom-card-hover text-center p-3">
+                            <h6 id="statTotalProductosLabel" class="text-muted text-uppercase mb-1 fs-7">Total Productos</h6>
+                            <h2 class="fw-bold text-primary mb-0" id="statTotalProductos">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm custom-card-hover text-center p-3">
+                            <h6 class="text-muted text-uppercase mb-1 fs-7">Clientes Registrados</h6>
+                            <h2 class="fw-bold text-success mb-0" id="statTotalClientes">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm custom-card-hover text-center p-3">
+                            <h6 class="text-muted text-uppercase mb-1 fs-7">Pedidos Totales</h6>
+                            <h2 class="fw-bold text-info mb-0" id="statTotalPedidos">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm custom-card-hover text-center p-3">
+                            <h6 class="text-muted text-uppercase mb-1 fs-7">Sin Stock</h6>
+                            <h2 class="fw-bold text-danger mb-0" id="statSinStock">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="renderizadoFiltrosProductos" class="d-flex justify-content-between align-items-center mb-3 p-3 rounded shadow-sm">
+                    <h3 class="text-custom-title mb-0">Listado de Productos</h3>
+                    <div class="btn-group shadow-sm">
+                        <button class="btn btn-outline-primary active" id="btnVistaCartas" title="Vista Tarjetas">
+                            <i class="bi bi-grid-fill"></i>
+                        </button>
+                        <button class="btn btn-outline-primary" id="btnVistaTabla" title="Vista Tabla">
+                            <i class="bi bi-table"></i>
+                        </button>
+                        <button class="btn btn-primary ms-2 rounded" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#filtrosAvanzados">
+                            <i class="bi bi-sliders"></i> Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <div class="collapse mb-4" id="filtrosAvanzados">
+                    <div class="card card-body shadow-sm border-0">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-secondary">Ordenar por:</label>
+                                <select class="form-select" id="selectOrdenar">
+                                    <option value="nombreAsc">Nombre (A-Z)</option>
+                                    <option value="nombreDesc">Nombre (Z-A)</option>
+                                    <option value="precioAsc">Precio (Menor a Mayor)</option>
+                                    <option value="precioDesc">Precio (Mayor a Menor)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-secondary">Estado:</label>
+                                <select class="form-select" id="estadoSelect">
+                                    <option value="Todos">Todos</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-outline-primary w-100 fw-bold" id="btnAplicarFiltros">
+                                    Aplicar Filtros
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contenedorProductos">
+                </div>
+                <nav class="mt-4" aria-label="Paginación de productos">
+                    <ul id="paginacion" class="pagination justify-content-center shadow-sm">
+                        <p class="text-muted mt-2">Para paginación agrega productos o filtra los que están.</p>
+                    </ul>
+                </nav>
+                <div></div>
+
+            </main>
         </div>
-    </main>
+    </div>
+
+    <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalAgregarProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header">
+                    <h5 class="modal-title fw-bold" id="modalAgregarProductoLabel">
+                        <i class="bi bi-box-seam"></i> Agregar Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form id="frmProducto">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código</label>
+                                <input type="text" class="form-control" id="codigo" pattern="[A-Z]{3}-[0-9]{3}"
+                                    placeholder="Ej. ABC-001" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoría</label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Computadoras">Computadoras</option>
+                                    <option value="Periféricos">Periféricos</option>
+                                    <option value="Componentes">Componentes</option>
+                                    <option value="Accesorios">Accesorios</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Ej. Mouse Gamer"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Precio ($)</label>
+                                <input type="number" class="form-control" id="precio" step="0.01" min="0.01" placeholder="Ej. 30.50"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Stock</label>
+                                <input type="number" class="form-control" id="stock" min="0" placeholder="Ej. 30"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Estado</label>
+                                <select class="form-select" id="estado" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success fw-bold text-white">
+                            Guardar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header">
+                    <h5 class="modal-title fw-bold" id="modalEditarProductoLabel">
+                        <i class="bi bi-pencil-square"></i> Editar Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <form id="frmEditarProducto">
+                    <input type="hidden" class="form-control" id="codigoActualEditar" pattern="[A-Z]{3}-[0-9]{3}"
+                        readonly required />
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Código</label>
+                                <input type="text" class="form-control" id="codigoEditar" pattern="[A-Z]{3}-[0-9]{3}"
+                                    placeholder="Ej. ABC-001" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoría</label>
+                                <select class="form-select" id="categoriaEditar" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Computadoras">Computadoras</option>
+                                    <option value="Periféricos">Periféricos</option>
+                                    <option value="Componentes">Componentes</option>
+                                    <option value="Accesorios">Accesorios</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="nombreEditar" placeholder="Ej. Mouse Gamer"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Precio ($)</label>
+                                <input type="number" class="form-control" id="precioEditar" step="0.01" min="0.01" placeholder="Ej. 30.50"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Stock</label>
+                                <input type="number" class="form-control" id="stockEditar" min="0" placeholder="Ej. 30"
+                                    required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Estado</label>
+                                <select class="form-select" id="estadoEditar" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success fw-bold text-white">
+                            Editar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEliminarProducto" tabindex="-1" aria-labelledby="modalEliminarProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-header text-danger">
+                    <h5 class="modal-title fw-bold" id="modalEliminarProductoLabel">
+                        <i class="bi bi-trash-fill"></i> ¿Quieres eliminar el producto?
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 id="codProductoEliminar" class="text-center fw-bold"></h3>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button id="btnEliminarProducto" type="button" class="btn btn-danger fw-bold text-white">
+                        Eliminar Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end shadow" tabindex="-1" id="offcanvasDetalle"
+        aria-labelledby="offcanvasDetalleLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title text-custom-title fw-bold" id="offcanvasDetalleLabel">
+                <i class="bi bi-info-circle"></i> Detalles del Producto
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h4 class="text-primary fw-bold" id="detNombre">
+                Cargando...
+            </h4>
+            <span class="badge bg-secondary mb-4 fs-6" id="detCodigo">PRO-000</span>
+
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-tag text-primary"></i> Categoría:</strong>
+                    <span id="detCategoria">Cargando...</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-currency-dollar text-primary"></i> Precio:</strong>
+                    $<span id="detPrecio">0.00</span>
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-box2 text-primary"></i> Stock:</strong>
+                    <span id="detStock">0</span> unidades
+                </li>
+                <li class="list-group-item px-0">
+                    <strong><i class="bi bi-toggle-on text-primary"></i> Estado:</strong>
+                    <span id="detEstado">Cargando...</span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastExito" class="toast align-items-center text-bg-success border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span id="toastExitoMsj">Producto guardado correctamente.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastError" class="toast align-items-center text-bg-danger border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="toastErrorMsj">Revisa los campos.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastCodigo" class="toast align-items-center text-bg-warning border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span id="toastErrorMsj">Código repetido, usa otro.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div id="toastExitoEliminar" class="toast align-items-center text-bg-success border-0 shadow" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span id="toastExitoMsj">Producto eliminado correctamente.</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/app.js"></script>
 </body>

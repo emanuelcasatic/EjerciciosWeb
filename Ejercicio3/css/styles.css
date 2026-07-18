@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+* {
+    font-family: 'Quicksand', 'Times New Roman', Times, serif;
+}
+
+body {
+  background-color: rgb(235, 246, 246);
+  min-height: 100vh;
+  transition:
+    background-color 0.5s ease,
+    color 0.25s ease;
+}
+
+[data-bs-theme="dark"] body {
+  background-color: rgb(1, 23, 53);
+}
+
+.text-custom-title {
+    color: #4b238f;
+}
+
+[data-bs-theme="dark"] .text-custom-title {
+    color: #a779f8;
+}
+
+.btn-morado {
+    background-color: #6426cf;
+}
+
+[data-bs-theme="dark"] .btn-morado {
+    background-color: #9f6bf8;
+}
+
+.btn-morado:hover {
+    background-color: #9f6bf8;
+}
+
+[data-bs-theme="dark"] .btn-morado:hover {
+    background-color:  #6426cf;
+}
+
+.custom-card-hover {
+    transition: transform 0.2s ease-in-out;
+}
+
+.custom-card-hover:hover {
+    transform: translateY(-3px);
+}
